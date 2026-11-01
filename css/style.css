@@ -191,3 +191,48 @@ body {
     align-items: stretch;
   }
 }
+
+/* Задача */
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 10px;
+  transition: opacity 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.task__body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.task__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.task__title {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.task__date {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.task--overdue {
+  border-left-color: var(--color-danger);
+}
+
+.task--overdue .task__date {
+  color: var(--color-danger);
+  font-weight: 600;
+}
