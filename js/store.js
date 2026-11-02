@@ -1,8 +1,21 @@
+const STORAGE_KEY = 'todo-app.tasks';
+
 function generateId() {
   if (window.crypto && typeof window.crypto.randomUUID === 'function') {
     return window.crypto.randomUUID();
   }
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function isValidTask(task) {
+  return (
+    task !== null &&
+    typeof task === 'object' &&
+    typeof task.id === 'string' &&
+    typeof task.title === 'string' &&
+    typeof task.date === 'string' &&
+    typeof task.completed === 'boolean'
+  );
 }
 
 /**
@@ -15,6 +28,27 @@ export class TaskStore {
     this.tasks = [];
   }
 
+  /** Восстанавливает задачи из localStorage. */
+  load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      this.tasks = Array.isArray(parsed) ? parsed.filter(isValidTask) : [];
+    } catch (error) {
+      console.warn('Не удалось загрузить задачи из localStorage', error);
+      this.tasks = [];
+    }
+  }
+
+  /** Сохраняет задачи в localStorage. */
+  save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
+    } catch (error) {
+      console.warn('Не удалось сохранить задачи в localStorage', error);
+    }
+  }
+
   add(title, date) {
     const task = {
       id: generateId(),
@@ -24,15 +58,19 @@ export class TaskStore {
       createdAt: Date.now(),
     };
     this.tasks.unshift(task);
+    this.save();
     return task;
   }
 
   remove(id) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
+    this.save();
   }
 
   toggle(id) {
     const task = this.tasks.find((item) => item.id === id);
-    if (task) task.completed = !task.completed;
+    if (!task) return;
+    task.completed = !task.completed;
+    this.save();
   }
 }

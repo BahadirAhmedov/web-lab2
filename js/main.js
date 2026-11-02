@@ -6,6 +6,7 @@ import { renderTasks, renderStats } from './render.js';
 setupHead();
 const ui = buildLayout();
 const store = new TaskStore();
+store.load();
 
 function render() {
   renderTasks(ui, store.tasks);
