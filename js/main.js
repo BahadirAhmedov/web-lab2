@@ -32,4 +32,17 @@ ui.titleInput.addEventListener('input', () => {
   ui.titleInput.classList.remove('field__input--invalid');
 });
 
+ui.list.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-action]');
+  if (!button) return;
+
+  const item = button.closest('.task');
+  const { id } = item.dataset;
+
+  if (button.dataset.action === 'delete') {
+    store.remove(id);
+    render();
+  }
+});
+
 render();

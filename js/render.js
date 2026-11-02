@@ -36,8 +36,17 @@ function createTaskItem(task) {
     time,
   ]);
 
+  const deleteButton = createElement('button', {
+    className: 'icon-button icon-button--danger',
+    text: '✕',
+    attrs: { type: 'button', title: 'Удалить', 'aria-label': `Удалить задачу «${task.title}»` },
+    dataset: { action: 'delete' },
+  });
+
+  const actions = createElement('div', { className: 'task__actions' }, [deleteButton]);
+
   return createElement('li', { className: classes.join(' '), dataset: { id: task.id } }, [
-    createElement('article', { className: 'task__body' }, [content]),
+    createElement('article', { className: 'task__body' }, [content, actions]),
   ]);
 }
 

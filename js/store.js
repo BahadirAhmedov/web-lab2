@@ -26,4 +26,8 @@ export class TaskStore {
     this.tasks.unshift(task);
     return task;
   }
+
+  remove(id) {
+    this.tasks = this.tasks.filter((task) => task.id !== id);
+  }
 }
