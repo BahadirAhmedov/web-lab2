@@ -30,4 +30,9 @@ export class TaskStore {
   remove(id) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
+
+  toggle(id) {
+    const task = this.tasks.find((item) => item.id === id);
+    if (task) task.completed = !task.completed;
+  }
 }

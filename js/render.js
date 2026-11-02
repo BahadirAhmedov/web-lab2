@@ -23,7 +23,18 @@ function isOverdue(task) {
 
 function createTaskItem(task) {
   const classes = ['task'];
+  if (task.completed) classes.push('task--done');
   if (isOverdue(task)) classes.push('task--overdue');
+
+  const checkbox = createElement('input', {
+    className: 'task__checkbox',
+    attrs: {
+      type: 'checkbox',
+      checked: task.completed,
+      'aria-label': `Отметить задачу «${task.title}» как выполненную`,
+    },
+    dataset: { action: 'toggle' },
+  });
 
   const time = createElement('time', {
     className: 'task__date',
@@ -46,7 +57,7 @@ function createTaskItem(task) {
   const actions = createElement('div', { className: 'task__actions' }, [deleteButton]);
 
   return createElement('li', { className: classes.join(' '), dataset: { id: task.id } }, [
-    createElement('article', { className: 'task__body' }, [content, actions]),
+    createElement('article', { className: 'task__body' }, [checkbox, content, actions]),
   ]);
 }
 

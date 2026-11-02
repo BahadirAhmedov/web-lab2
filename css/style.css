@@ -268,3 +268,23 @@ body {
   color: #fff;
   background: var(--color-danger);
 }
+
+.task__checkbox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--color-success);
+  cursor: pointer;
+}
+
+.task--done {
+  background: #f7f9f8;
+  border-left-color: var(--color-success);
+  opacity: 0.75;
+}
+
+.task--done .task__title {
+  color: var(--color-muted);
+  text-decoration: line-through;
+}

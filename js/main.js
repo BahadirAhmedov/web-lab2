@@ -32,8 +32,16 @@ ui.titleInput.addEventListener('input', () => {
   ui.titleInput.classList.remove('field__input--invalid');
 });
 
+ui.list.addEventListener('change', (event) => {
+  if (event.target.dataset.action !== 'toggle') return;
+
+  const { id } = event.target.closest('.task').dataset;
+  store.toggle(id);
+  render();
+});
+
 ui.list.addEventListener('click', (event) => {
-  const button = event.target.closest('[data-action]');
+  const button = event.target.closest('button[data-action]');
   if (!button) return;
 
   const item = button.closest('.task');
