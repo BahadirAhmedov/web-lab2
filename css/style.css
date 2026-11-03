@@ -313,3 +313,18 @@ body {
   display: flex;
   gap: 8px;
 }
+
+@media (max-width: 600px) {
+  .task-edit__fields {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+
+  .task-edit__actions {
+    width: 100%;
+  }
+
+  .task-edit__actions .button {
+    flex: 1;
+  }
+}

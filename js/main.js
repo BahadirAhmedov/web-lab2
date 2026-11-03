@@ -89,4 +89,15 @@ ui.list.addEventListener('submit', (event) => {
   render();
 });
 
+ui.list.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && state.editingId) {
+    state.editingId = null;
+    render();
+  }
+});
+
+ui.list.addEventListener('input', (event) => {
+  event.target.classList.remove('field__input--invalid');
+});
+
 render();
