@@ -2,6 +2,7 @@ import { setupHead } from './dom.js';
 import { buildLayout } from './layout.js';
 import { TaskStore } from './store.js';
 import { renderTasks, renderStats } from './render.js';
+import { getVisibleTasks } from './filters.js';
 
 setupHead();
 const ui = buildLayout();
@@ -10,10 +11,12 @@ store.load();
 
 const state = {
   editingId: null,
+  filter: 'all',
 };
 
 function render() {
-  renderTasks(ui, store.tasks, { editingId: state.editingId });
+  const visibleTasks = getVisibleTasks(store.tasks, state);
+  renderTasks(ui, visibleTasks, { editingId: state.editingId, hasTasks: store.tasks.length > 0 });
   renderStats(ui, store.tasks);
 }
 
@@ -35,6 +38,11 @@ ui.form.addEventListener('submit', (event) => {
 
 ui.titleInput.addEventListener('input', () => {
   ui.titleInput.classList.remove('field__input--invalid');
+});
+
+ui.filterSelect.addEventListener('change', () => {
+  state.filter = ui.filterSelect.value;
+  render();
 });
 
 ui.list.addEventListener('change', (event) => {

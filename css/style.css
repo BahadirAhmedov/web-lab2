@@ -328,3 +328,14 @@ body {
     flex: 1;
   }
 }
+
+/* Панель фильтров */
+.toolbar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+select.field__input {
+  cursor: pointer;
+}

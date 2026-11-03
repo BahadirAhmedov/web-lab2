@@ -55,6 +55,35 @@ function buildTaskForm() {
   return { section, form, titleInput, dateInput };
 }
 
+function buildSelect(id, label, options) {
+  const select = createElement(
+    'select',
+    { className: 'field__input', attrs: { id } },
+    options.map(([value, text]) => createElement('option', { text, attrs: { value } })),
+  );
+
+  const field = createElement('label', { className: 'field' }, [
+    createElement('span', { className: 'field__label', text: label }),
+    select,
+  ]);
+
+  return { field, select };
+}
+
+function buildToolbar() {
+  const filter = buildSelect('task-filter', 'Статус', [
+    ['all', 'Все задачи'],
+    ['active', 'Невыполненные'],
+    ['completed', 'Выполненные'],
+  ]);
+
+  const section = createElement('section', { className: 'panel toolbar', attrs: { 'aria-label': 'Фильтры задач' } }, [
+    filter.field,
+  ]);
+
+  return { section, filterSelect: filter.select };
+}
+
 function buildTaskList() {
   const list = createElement('ul', { className: 'task-list' });
   const emptyMessage = createElement('p', {
@@ -84,10 +113,11 @@ function buildFooter() {
 export function buildLayout() {
   const header = buildHeader();
   const taskForm = buildTaskForm();
+  const toolbar = buildToolbar();
   const taskList = buildTaskList();
   const { footer, stats } = buildFooter();
 
-  const main = createElement('main', { className: 'main' }, [taskForm.section, taskList.section]);
+  const main = createElement('main', { className: 'main' }, [taskForm.section, toolbar.section, taskList.section]);
   const app = createElement('div', { className: 'app' }, [header, main, footer]);
 
   document.body.append(app);
@@ -96,6 +126,7 @@ export function buildLayout() {
     form: taskForm.form,
     titleInput: taskForm.titleInput,
     dateInput: taskForm.dateInput,
+    filterSelect: toolbar.filterSelect,
     list: taskList.list,
     emptyMessage: taskList.emptyMessage,
     stats,

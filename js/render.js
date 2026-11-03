@@ -107,10 +107,13 @@ function createEditItem(task) {
 }
 
 /** Перерисовывает список задач. */
-export function renderTasks(ui, tasks, { editingId = null } = {}) {
+export function renderTasks(ui, tasks, { editingId = null, hasTasks = tasks.length > 0 } = {}) {
   const items = tasks.map((task) => (task.id === editingId ? createEditItem(task) : createTaskItem(task)));
   ui.list.replaceChildren(...items);
   ui.emptyMessage.hidden = tasks.length > 0;
+  ui.emptyMessage.textContent = hasTasks
+    ? 'Нет задач, подходящих под условия'
+    : 'Задач пока нет — добавьте первую!';
 
   const editInput = ui.list.querySelector('.task-edit input[name="title"]');
   if (editInput) {
