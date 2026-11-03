@@ -339,3 +339,17 @@ body {
 select.field__input {
   cursor: pointer;
 }
+
+.toolbar__search {
+  grid-column: span 2;
+}
+
+@media (max-width: 600px) {
+  .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar__search {
+    grid-column: auto;
+  }
+}

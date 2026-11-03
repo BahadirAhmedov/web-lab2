@@ -12,6 +12,7 @@ store.load();
 const state = {
   editingId: null,
   filter: 'all',
+  search: '',
 };
 
 function render() {
@@ -38,6 +39,11 @@ ui.form.addEventListener('submit', (event) => {
 
 ui.titleInput.addEventListener('input', () => {
   ui.titleInput.classList.remove('field__input--invalid');
+});
+
+ui.searchInput.addEventListener('input', () => {
+  state.search = ui.searchInput.value;
+  render();
 });
 
 ui.filterSelect.addEventListener('change', () => {

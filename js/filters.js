@@ -8,7 +8,9 @@ const STATUS_FILTERS = {
  * Возвращает задачи, которые нужно показать с учётом текущих настроек.
  * Исходный массив не изменяется.
  */
-export function getVisibleTasks(tasks, { filter = 'all' } = {}) {
+export function getVisibleTasks(tasks, { filter = 'all', search = '' } = {}) {
   const byStatus = STATUS_FILTERS[filter] ?? STATUS_FILTERS.all;
-  return tasks.filter(byStatus);
+  const query = search.trim().toLowerCase();
+
+  return tasks.filter((task) => byStatus(task) && task.title.toLowerCase().includes(query));
 }

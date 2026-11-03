@@ -71,6 +71,21 @@ function buildSelect(id, label, options) {
 }
 
 function buildToolbar() {
+  const searchInput = createElement('input', {
+    className: 'field__input',
+    attrs: {
+      type: 'search',
+      id: 'task-search',
+      placeholder: 'Название задачи…',
+      autocomplete: 'off',
+    },
+  });
+
+  const searchField = createElement('label', { className: 'field toolbar__search' }, [
+    createElement('span', { className: 'field__label', text: 'Поиск' }),
+    searchInput,
+  ]);
+
   const filter = buildSelect('task-filter', 'Статус', [
     ['all', 'Все задачи'],
     ['active', 'Невыполненные'],
@@ -78,10 +93,11 @@ function buildToolbar() {
   ]);
 
   const section = createElement('section', { className: 'panel toolbar', attrs: { 'aria-label': 'Фильтры задач' } }, [
+    searchField,
     filter.field,
   ]);
 
-  return { section, filterSelect: filter.select };
+  return { section, searchInput, filterSelect: filter.select };
 }
 
 function buildTaskList() {
@@ -126,6 +142,7 @@ export function buildLayout() {
     form: taskForm.form,
     titleInput: taskForm.titleInput,
     dateInput: taskForm.dateInput,
+    searchInput: toolbar.searchInput,
     filterSelect: toolbar.filterSelect,
     list: taskList.list,
     emptyMessage: taskList.emptyMessage,
