@@ -288,3 +288,28 @@ body {
   color: var(--color-muted);
   text-decoration: line-through;
 }
+
+.task--editing {
+  border-left-color: var(--color-primary);
+}
+
+.task-edit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.task-edit__fields {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.task-edit__actions {
+  display: flex;
+  gap: 8px;
+}

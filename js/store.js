@@ -73,4 +73,12 @@ export class TaskStore {
     task.completed = !task.completed;
     this.save();
   }
+
+  update(id, { title, date }) {
+    const task = this.tasks.find((item) => item.id === id);
+    if (!task) return;
+    task.title = title.trim();
+    task.date = date;
+    this.save();
+  }
 }

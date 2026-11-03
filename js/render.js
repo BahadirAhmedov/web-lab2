@@ -47,6 +47,13 @@ function createTaskItem(task) {
     time,
   ]);
 
+  const editButton = createElement('button', {
+    className: 'icon-button',
+    text: '✎',
+    attrs: { type: 'button', title: 'Редактировать', 'aria-label': `Редактировать задачу «${task.title}»` },
+    dataset: { action: 'edit' },
+  });
+
   const deleteButton = createElement('button', {
     className: 'icon-button icon-button--danger',
     text: '✕',
@@ -54,18 +61,62 @@ function createTaskItem(task) {
     dataset: { action: 'delete' },
   });
 
-  const actions = createElement('div', { className: 'task__actions' }, [deleteButton]);
+  const actions = createElement('div', { className: 'task__actions' }, [editButton, deleteButton]);
 
   return createElement('li', { className: classes.join(' '), dataset: { id: task.id } }, [
     createElement('article', { className: 'task__body' }, [checkbox, content, actions]),
   ]);
 }
 
+function createEditItem(task) {
+  const titleInput = createElement('input', {
+    className: 'field__input',
+    attrs: {
+      type: 'text',
+      name: 'title',
+      value: task.title,
+      maxlength: '120',
+      autocomplete: 'off',
+      'aria-label': 'Название задачи',
+    },
+  });
+
+  const dateInput = createElement('input', {
+    className: 'field__input',
+    attrs: { type: 'date', name: 'date', value: task.date, 'aria-label': 'Срок выполнения' },
+  });
+
+  const form = createElement('form', { className: 'task-edit', attrs: { novalidate: true } }, [
+    createElement('div', { className: 'task-edit__fields' }, [titleInput, dateInput]),
+    createElement('div', { className: 'task-edit__actions' }, [
+      createElement('button', {
+        className: 'button button--primary',
+        text: 'Сохранить',
+        attrs: { type: 'submit' },
+      }),
+      createElement('button', {
+        className: 'button',
+        text: 'Отмена',
+        attrs: { type: 'button' },
+        dataset: { action: 'cancel' },
+      }),
+    ]),
+  ]);
+
+  return createElement('li', { className: 'task task--editing', dataset: { id: task.id } }, [form]);
+}
+
 /** Перерисовывает список задач. */
-export function renderTasks(ui, tasks) {
-  const items = tasks.map((task) => createTaskItem(task));
+export function renderTasks(ui, tasks, { editingId = null } = {}) {
+  const items = tasks.map((task) => (task.id === editingId ? createEditItem(task) : createTaskItem(task)));
   ui.list.replaceChildren(...items);
   ui.emptyMessage.hidden = tasks.length > 0;
+
+  const editInput = ui.list.querySelector('.task-edit input[name="title"]');
+  if (editInput) {
+    editInput.focus();
+    editInput.setSelectionRange(editInput.value.length, editInput.value.length);
+  }
 }
 
 /** Обновляет счётчики в подвале. */
