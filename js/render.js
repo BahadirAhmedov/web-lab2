@@ -1,6 +1,5 @@
 import { createElement } from './dom.js';
 
-/** Превращает строку YYYY-MM-DD в локальную дату без сдвига часового пояса. */
 export function parseDate(value) {
   if (!value) return null;
   const [year, month, day] = value.split('-').map(Number);
@@ -114,7 +113,6 @@ function createEditItem(task) {
   return createElement('li', { className: 'task task--editing', dataset: { id: task.id } }, [form]);
 }
 
-/** Перерисовывает список задач. */
 export function renderTasks(ui, tasks, { editingId = null, hasTasks = tasks.length > 0, draggable = true } = {}) {
   const items = tasks.map((task) =>
     task.id === editingId ? createEditItem(task) : createTaskItem(task, draggable && !editingId),
@@ -134,7 +132,6 @@ export function renderTasks(ui, tasks, { editingId = null, hasTasks = tasks.leng
   }
 }
 
-/** Обновляет счётчики в подвале. */
 export function renderStats(ui, allTasks) {
   const done = allTasks.filter((task) => task.completed).length;
   ui.stats.textContent = `Всего задач: ${allTasks.length} · выполнено: ${done} · осталось: ${allTasks.length - done}`;

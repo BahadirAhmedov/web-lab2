@@ -8,17 +8,11 @@ function clearDropMarkers(list) {
   });
 }
 
-/** Определяет, куда вставлять задачу: перед целевой или после неё. */
 function isAfter(target, clientY) {
   const rect = target.getBoundingClientRect();
   return clientY > rect.top + rect.height / 2;
 }
 
-/**
- * Подключает перетаскивание задач (HTML Drag and Drop API) к списку.
- * @param {HTMLElement} list
- * @param {(draggedId: string, targetId: string, after: boolean) => void} onMove
- */
 export function setupDragAndDrop(list, onMove) {
   let draggedId = null;
 
@@ -73,10 +67,6 @@ export function setupDragAndDrop(list, onMove) {
   setupTouchDrag(list, onMove);
 }
 
-/**
- * На сенсорных экранах HTML Drag and Drop работает не везде,
- * поэтому для touch перетаскивание реализовано через Pointer Events за «ручку».
- */
 function setupTouchDrag(list, onMove) {
   let source = null;
   let drop = null;
@@ -100,9 +90,7 @@ function setupTouchDrag(list, onMove) {
     source.classList.add(DRAGGING_CLASS);
     try {
       handle.setPointerCapture(event.pointerId);
-    } catch {
-      // Указатель уже неактивен — продолжаем без захвата
-    }
+    } catch {}
   });
 
   list.addEventListener('pointermove', (event) => {

@@ -22,7 +22,6 @@ function render() {
   renderTasks(ui, visibleTasks, {
     editingId: state.editingId,
     hasTasks: store.tasks.length > 0,
-    // Ручной порядок имеет смысл менять только без сортировки по дате
     draggable: state.sort === 'manual',
   });
   renderStats(ui, store.tasks);

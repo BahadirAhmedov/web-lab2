@@ -5,7 +5,6 @@ const STATUS_FILTERS = {
 };
 
 function compareByDate(a, b) {
-  // Задачи без срока всегда оказываются в конце списка
   if (!a.date && !b.date) return 0;
   if (!a.date) return 1;
   if (!b.date) return -1;
@@ -20,10 +19,6 @@ const SORTERS = {
   },
 };
 
-/**
- * Возвращает задачи, которые нужно показать с учётом текущих настроек.
- * Исходный массив не изменяется.
- */
 export function getVisibleTasks(tasks, { filter = 'all', search = '', sort = 'manual' } = {}) {
   const byStatus = STATUS_FILTERS[filter] ?? STATUS_FILTERS.all;
   const query = search.trim().toLowerCase();

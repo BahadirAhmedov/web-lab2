@@ -1,10 +1,3 @@
-/**
- * Создаёт DOM-элемент с классами, текстом, атрибутами и обработчиками.
- * @param {string} tag
- * @param {object} [options]
- * @param {Array<Node|string>} [children]
- * @returns {HTMLElement}
- */
 export function createElement(tag, options = {}, children = []) {
   const element = document.createElement(tag);
   const { className, text, attrs, dataset, on } = options;
@@ -31,7 +24,6 @@ export function createElement(tag, options = {}, children = []) {
   return element;
 }
 
-/** Добавляет в <head> мета-теги, заголовок и стили страницы. */
 export function setupHead() {
   document.title = 'ToDo — список задач';
 

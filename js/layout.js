@@ -136,10 +136,6 @@ function buildFooter() {
   return { footer, stats };
 }
 
-/**
- * Собирает всю структуру страницы и добавляет её в <body>.
- * Возвращает ссылки на элементы, с которыми работает логика приложения.
- */
 export function buildLayout() {
   const header = buildHeader();
   const taskForm = buildTaskForm();

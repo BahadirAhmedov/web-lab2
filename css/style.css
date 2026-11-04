@@ -38,7 +38,6 @@ body {
   padding: 32px 16px;
 }
 
-/* Шапка */
 .header__title {
   margin: 0;
   font-size: 2rem;
@@ -49,7 +48,6 @@ body {
   color: var(--color-muted);
 }
 
-/* Основная часть */
 .main {
   display: grid;
   gap: var(--gap);
@@ -69,7 +67,6 @@ body {
   font-size: 1.15rem;
 }
 
-/* Поля и кнопки */
 .field {
   display: flex;
   flex-direction: column;
@@ -134,14 +131,12 @@ body {
   border-color: var(--color-primary-hover);
 }
 
-/* Форма добавления */
 .task-form {
   display: flex;
   align-items: flex-end;
   gap: 12px;
 }
 
-/* Список */
 .task-list {
   display: flex;
   flex-direction: column;
@@ -161,7 +156,6 @@ body {
   display: none;
 }
 
-/* Подвал */
 .footer {
   color: var(--color-muted);
   font-size: 0.9rem;
@@ -172,7 +166,6 @@ body {
   margin: 0;
 }
 
-/* Адаптивность */
 @media (max-width: 600px) {
   .app {
     padding: 20px 12px;
@@ -192,7 +185,6 @@ body {
   }
 }
 
-/* Задача */
 .task {
   display: flex;
   align-items: center;
@@ -329,7 +321,6 @@ body {
   }
 }
 
-/* Панель фильтров */
 .toolbar {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -356,7 +347,6 @@ select.field__input {
   }
 }
 
-/* Drag-and-drop */
 .task__handle {
   flex-shrink: 0;
   padding: 6px 2px;

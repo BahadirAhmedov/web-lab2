@@ -18,17 +18,11 @@ function isValidTask(task) {
   );
 }
 
-/**
- * Хранилище задач. Порядок элементов массива — пользовательский порядок задач.
- * @typedef {{ id: string, title: string, date: string, completed: boolean, createdAt: number }} Task
- */
 export class TaskStore {
   constructor() {
-    /** @type {Task[]} */
     this.tasks = [];
   }
 
-  /** Восстанавливает задачи из localStorage. */
   load() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -40,7 +34,6 @@ export class TaskStore {
     }
   }
 
-  /** Сохраняет задачи в localStorage. */
   save() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
@@ -82,7 +75,6 @@ export class TaskStore {
     this.save();
   }
 
-  /** Перемещает задачу draggedId перед (или после) задачи targetId. */
   move(draggedId, targetId, after = false) {
     const from = this.tasks.findIndex((task) => task.id === draggedId);
     if (from === -1 || draggedId === targetId) return;
