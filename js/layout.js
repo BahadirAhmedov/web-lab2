@@ -92,12 +92,19 @@ function buildToolbar() {
     ['completed', 'Выполненные'],
   ]);
 
+  const sort = buildSelect('task-sort', 'Сортировка', [
+    ['manual', 'Свой порядок'],
+    ['date-asc', 'Сначала ближайшие'],
+    ['date-desc', 'Сначала поздние'],
+  ]);
+
   const section = createElement('section', { className: 'panel toolbar', attrs: { 'aria-label': 'Фильтры задач' } }, [
     searchField,
     filter.field,
+    sort.field,
   ]);
 
-  return { section, searchInput, filterSelect: filter.select };
+  return { section, searchInput, filterSelect: filter.select, sortSelect: sort.select };
 }
 
 function buildTaskList() {
@@ -144,6 +151,7 @@ export function buildLayout() {
     dateInput: taskForm.dateInput,
     searchInput: toolbar.searchInput,
     filterSelect: toolbar.filterSelect,
+    sortSelect: toolbar.sortSelect,
     list: taskList.list,
     emptyMessage: taskList.emptyMessage,
     stats,

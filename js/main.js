@@ -13,6 +13,7 @@ const state = {
   editingId: null,
   filter: 'all',
   search: '',
+  sort: 'manual',
 };
 
 function render() {
@@ -48,6 +49,11 @@ ui.searchInput.addEventListener('input', () => {
 
 ui.filterSelect.addEventListener('change', () => {
   state.filter = ui.filterSelect.value;
+  render();
+});
+
+ui.sortSelect.addEventListener('change', () => {
+  state.sort = ui.sortSelect.value;
   render();
 });
 
