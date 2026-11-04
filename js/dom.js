@@ -41,9 +41,15 @@ export function setupHead() {
   const description = createElement('meta', {
     attrs: { name: 'description', content: 'ToDo-лист на чистом JavaScript' },
   });
+  const icon = createElement('link', {
+    attrs: {
+      rel: 'icon',
+      href: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>",
+    },
+  });
   const styles = createElement('link', {
     attrs: { rel: 'stylesheet', href: 'css/style.css' },
   });
 
-  document.head.append(viewport, description, styles);
+  document.head.append(viewport, description, icon, styles);
 }

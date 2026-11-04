@@ -114,13 +114,20 @@ function buildTaskList() {
     text: 'Задач пока нет — добавьте первую!',
   });
 
+  const dragHint = createElement('p', {
+    className: 'task-list__hint',
+    text: 'Чтобы менять порядок перетаскиванием, выберите сортировку «Свой порядок»',
+    attrs: { hidden: true },
+  });
+
   const section = createElement('section', { className: 'panel', attrs: { 'aria-labelledby': 'list-title' } }, [
     createElement('h2', { className: 'panel__title', text: 'Мои задачи', attrs: { id: 'list-title' } }),
+    dragHint,
     list,
     emptyMessage,
   ]);
 
-  return { section, list, emptyMessage };
+  return { section, list, emptyMessage, dragHint };
 }
 
 function buildFooter() {
@@ -154,6 +161,7 @@ export function buildLayout() {
     sortSelect: toolbar.sortSelect,
     list: taskList.list,
     emptyMessage: taskList.emptyMessage,
+    dragHint: taskList.dragHint,
     stats,
   };
 }

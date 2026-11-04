@@ -81,4 +81,20 @@ export class TaskStore {
     task.date = date;
     this.save();
   }
+
+  /** Перемещает задачу draggedId перед (или после) задачи targetId. */
+  move(draggedId, targetId, after = false) {
+    const from = this.tasks.findIndex((task) => task.id === draggedId);
+    if (from === -1 || draggedId === targetId) return;
+
+    const [task] = this.tasks.splice(from, 1);
+    const targetIndex = this.tasks.findIndex((item) => item.id === targetId);
+    if (targetIndex === -1) {
+      this.tasks.splice(from, 0, task);
+      return;
+    }
+
+    this.tasks.splice(after ? targetIndex + 1 : targetIndex, 0, task);
+    this.save();
+  }
 }

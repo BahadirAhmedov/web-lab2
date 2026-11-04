@@ -21,7 +21,7 @@ function isOverdue(task) {
   return date < today;
 }
 
-function createTaskItem(task) {
+function createTaskItem(task, draggable) {
   const classes = ['task'];
   if (task.completed) classes.push('task--done');
   if (isOverdue(task)) classes.push('task--overdue');
@@ -63,9 +63,17 @@ function createTaskItem(task) {
 
   const actions = createElement('div', { className: 'task__actions' }, [editButton, deleteButton]);
 
-  return createElement('li', { className: classes.join(' '), dataset: { id: task.id } }, [
-    createElement('article', { className: 'task__body' }, [checkbox, content, actions]),
-  ]);
+  const handle = createElement('span', {
+    className: 'task__handle',
+    text: '⠿',
+    attrs: { 'aria-hidden': 'true', title: 'Перетащите, чтобы изменить порядок' },
+  });
+
+  return createElement(
+    'li',
+    { className: classes.join(' '), dataset: { id: task.id }, attrs: { draggable: draggable ? 'true' : 'false' } },
+    [createElement('article', { className: 'task__body' }, [handle, checkbox, content, actions])],
+  );
 }
 
 function createEditItem(task) {
@@ -107,8 +115,12 @@ function createEditItem(task) {
 }
 
 /** Перерисовывает список задач. */
-export function renderTasks(ui, tasks, { editingId = null, hasTasks = tasks.length > 0 } = {}) {
-  const items = tasks.map((task) => (task.id === editingId ? createEditItem(task) : createTaskItem(task)));
+export function renderTasks(ui, tasks, { editingId = null, hasTasks = tasks.length > 0, draggable = true } = {}) {
+  const items = tasks.map((task) =>
+    task.id === editingId ? createEditItem(task) : createTaskItem(task, draggable && !editingId),
+  );
+  ui.list.classList.toggle('task-list--sortable', draggable);
+  ui.dragHint.hidden = draggable || tasks.length < 2;
   ui.list.replaceChildren(...items);
   ui.emptyMessage.hidden = tasks.length > 0;
   ui.emptyMessage.textContent = hasTasks

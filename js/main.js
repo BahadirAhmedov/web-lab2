@@ -3,6 +3,7 @@ import { buildLayout } from './layout.js';
 import { TaskStore } from './store.js';
 import { renderTasks, renderStats } from './render.js';
 import { getVisibleTasks } from './filters.js';
+import { setupDragAndDrop } from './dragAndDrop.js';
 
 setupHead();
 const ui = buildLayout();
@@ -18,7 +19,12 @@ const state = {
 
 function render() {
   const visibleTasks = getVisibleTasks(store.tasks, state);
-  renderTasks(ui, visibleTasks, { editingId: state.editingId, hasTasks: store.tasks.length > 0 });
+  renderTasks(ui, visibleTasks, {
+    editingId: state.editingId,
+    hasTasks: store.tasks.length > 0,
+    // Ручной порядок имеет смысл менять только без сортировки по дате
+    draggable: state.sort === 'manual',
+  });
   renderStats(ui, store.tasks);
 }
 
@@ -118,6 +124,11 @@ ui.list.addEventListener('keydown', (event) => {
 
 ui.list.addEventListener('input', (event) => {
   event.target.classList.remove('field__input--invalid');
+});
+
+setupDragAndDrop(ui.list, (draggedId, targetId, after) => {
+  store.move(draggedId, targetId, after);
+  render();
 });
 
 render();

@@ -355,3 +355,49 @@ select.field__input {
     grid-template-columns: 1fr;
   }
 }
+
+/* Drag-and-drop */
+.task__handle {
+  flex-shrink: 0;
+  padding: 6px 2px;
+  touch-action: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--color-border);
+  user-select: none;
+}
+
+.task-list--sortable .task[draggable='true'] {
+  cursor: grab;
+}
+
+.task-list--sortable .task[draggable='true']:hover .task__handle {
+  color: var(--color-muted);
+}
+
+.task-list:not(.task-list--sortable) .task__handle {
+  display: none;
+}
+
+.task--dragging {
+  opacity: 0.4;
+  cursor: grabbing;
+}
+
+.task--drop-before {
+  box-shadow: 0 -3px 0 var(--color-primary);
+}
+
+.task--drop-after {
+  box-shadow: 0 3px 0 var(--color-primary);
+}
+
+.task-list__hint {
+  margin: -4px 0 12px;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.task-list__hint[hidden] {
+  display: none;
+}
